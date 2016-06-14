@@ -1,0 +1,266 @@
+{% load static from staticfiles %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Signin Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link type='text/css' href='{% static "bootstrap/css/bootstrap.min.css" %}' rel="stylesheet">
+
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link type='text/css' href='{% static "bootstrap/css/ie10-viewport-bug-workaround.css" %}' rel="stylesheet">
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+
+<link rel='stylesheet' type='text/css' href='{% static "schedule/fullcalendar/fullcalendar.css" %}' />
+<link rel='stylesheet' type='text/css' href='{% static "schedule/fullcalendar/fullcalendar.print.css" %}' media='print' />
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+    <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/moment.min.js'></script>
+<script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery.min.js'></script>
+<script src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js"></script>
+<script src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://www.webglearth.com/v2/api.js"></script>
+
+
+ <script type="text/javascript">
+
+
+    function init() {
+
+      var options = {
+          center: [30.058056, 31.228889],
+          zoom: 3,
+          dragging: true,
+          scrollWheelZoom: true,
+          proxyHost: 'http://srtm.webglearth.com/cgi-bin/corsproxy.fcgi?url='
+        };
+
+       var map = WE.map('map', options );
+
+       var baselayer = WE.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpg', {
+          subdomains: '1234',
+          attribution: 'Tiles Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png">',
+          maxZoom: 18
+        }).addTo(map);
+
+
+       var markers = [];
+
+
+       $.getJSON('/schedule/events.map.json', function (data) {
+          $.each(data, function(i, item){
+               if (i >= markers.length) {
+                markers.push(""+ i +"");
+               }
+                markers[i] = WE.marker([ item.lat ,  item.long ]).addTo(map);
+                markers[i].bindPopup("<b>" + item.text1 + "</b><br>" + item.text2 + "<br /><span style='font-size:10px;color:#999'>" + item.text3 + "</span>", {maxWidth: 150, closeButton: true}).openPopup();
+              });
+          });
+
+
+        function add(today) {
+        var url = '/schedule/events.map.json' + today;
+          $.getJSON(url, {x: "1"},  function (data) {
+          $.each(data, function(i, item){
+              if (i >= markers.length) {
+                markers.push(""+ i +"");
+              }
+                markers[i] = WE.marker([ item.lat ,  item.long ]).addTo(map);
+                markers[i].bindPopup("<b>" + item.text1 + "</b><br>" + item.text2 + "<br /><span style='font-size:10px;color:#999'>" + item.text3 + "</span>", {maxWidth: 150, closeButton: true}).openPopup();
+
+              });
+          });
+       }
+
+
+       function flush() {
+         for (i = 0; i < markers.length; i++) {
+            markers[i].removeFrom(map);
+
+            }
+        }
+
+       function refresh(today) {
+            flush();
+            add(today);
+        }
+
+
+
+        $(document).ready(function() {
+
+        var tempVar = "";
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                editable: true,
+                events: '/schedule/events.json',
+                eventClick: function(date, allDay, jsEvent, view) {
+                 },
+
+
+
+                dayClick: function(date, allDay, jsEvent, view) {
+                    var today = date.format();
+                    refresh(today);
+
+                   // change the day's background color just for fun
+                    if (tempVar == "")
+                    {
+                        $(this).css('background-color', '#ED943B');
+                        tempVar = this;
+                    }
+                    else
+                    {
+                        $(this).css('background-color', '#ED943B');
+                        $(tempVar).css('background-color', 'white');
+                        tempVar = this;
+                    }
+
+                 }
+
+            });
+        });
+
+      }
+
+</script>
+
+<style type='text/css'>
+
+    body {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 14px;
+            font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+            }
+
+    #calendar {
+            width: 900px;
+            margin: 0 auto;
+            height:800px;
+            }
+
+     #map{
+                height:800px;
+                }
+
+
+    .top-buffer { margin-top:100px; }
+
+
+    </style>
+</head>
+<body onload="init()">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href='{% url "dashboard1" %}'>Burguburu web App</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href='{% url "dashboard1" %}'>Dashboard</a></li>
+            <li><a href='{% url "dashboard2" %}'>Profile</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-1 sidebar top-buffer">
+          <ul class="nav nav-sidebar">
+            <li><a href="#">Agenda / Globe</a></li>
+            <li><a href="#">In my city</a></li>
+          </ul>
+        </div>
+        <div class="col-md-6 top-buffer ">
+            <div id='calendar'></div>
+        </div>
+        <div class="col-md-5 top-buffer " >
+            <div id="map"></div>
+        </div>
+
+        </div>
+      </div>
+
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+            <form action="/your-name/" method="post">
+              {% csrf_token %}
+              {{ form }}
+              <input type="submit" value="Submit" />
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src='{% static "bootstrap/js/bootstrap.min.js" %}'></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src='{% static "bootstrap/js/ie10-viewport-bug-workaround.js" %}'></script>
+
+    <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
+
+<script src="http://www.webglearth.com/v2/api.js"></script>
+
+    <script>
+
+
+
+
+</script>
+</body>
+</html>

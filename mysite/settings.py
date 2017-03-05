@@ -58,7 +58,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'djcelery',
-    'schedule',
     'stockMarket',
     'chartit',
     'highcharts',

@@ -41,3 +41,7 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+mysite/__pycache__/
+mysite/utils/__pycache__/
+stockMarket/__pycache__/
+stockMarket/migrations/__pycache__/

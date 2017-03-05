@@ -36,7 +36,6 @@ urlpatterns = [
     url(r'^bar/$', LineView.as_view(), name='bar'),
     url(r'^schedule/', include('schedule.urls')),
     url(r'^accounts/login/$', auth_views.login),
-    url(r'^accounts/', include('schedule.urls')),
     url(r'^time/plus/(\d{1,2})/(\d{1,2})/$', hours_ahead),
 ]
 

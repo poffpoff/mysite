@@ -34,7 +34,6 @@ urlpatterns = [
     url(r'^time/$', current_datetime),
     url(r'^share/$', share_chart_view),
     url(r'^bar/$', LineView.as_view(), name='bar'),
-    url(r'^schedule/', include('schedule.urls')),
     url(r'^accounts/login/$', auth_views.login),
     url(r'^time/plus/(\d{1,2})/(\d{1,2})/$', hours_ahead),
 ]

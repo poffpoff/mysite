@@ -1,0 +1,29 @@
+wwapp baptistedeclerck$ celery -A mysite beat -l info
+wwapp baptistedeclerck$ celery -A mysite worker -l info
+
+Materiel:
+
+Python 3.5.1
+GCC 4.2.1
+django 1.9.4
+
+Postgresql 9.5.1
+user: baptistedeclerck pssword: Tompous6
+user: postgres
+
+database: djangodatabase
+
+
+rabbitmqctl
+user baptistedeclerck
+password Tompous6
+host : djangohost (rights to user baptistedeclerck)
+
+----------------------------------------------------------------------------------------------------------------------------------------
+http://deephacks.com/articles/entry/django-backups-dumpdata-versus-sql-dump-postgresql-and-mysql/
+DROP DATABASE IF EXISTS dbname;
+CREATE USER dbuser WITH PASSWORD dbpass;
+CREATE DATABASE dbname;
+GRANT ALL PRIVILEGES ON DATABASE dbname TO dbuser;
+"dbname", "dbuser", and "dbpass" must correspond to the DATABASES values in settings.py. The DROP DATABASE statement is just to make sure that the database gets deleted, if it was created and possibly prepopulated by a setup script. After dropping and re-creating the database you can start from a clean slate.
+-----------------------/---------------------------------------------------

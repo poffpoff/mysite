@@ -20,9 +20,9 @@ class ShareModel(models.Model):
         writer.write(yahoo_listener.get_trade_datetime(), yahoo_listener.get_price())
 
 
-    def get_read(self):
-        reader = data.ReaderCSV(self.name_ref)
-        return reader.read()
+    # def get_read(self):
+    #     reader = data.ReaderCSV()
+    #     return reader.read()
 
 
     def __str__(self):

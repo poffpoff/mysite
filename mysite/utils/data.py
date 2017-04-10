@@ -36,39 +36,39 @@ class WriterCSV:
                                     quotechar='|', quoting=csv.QUOTE_MINIMAL)
             spamwriter.writerow([time_ref,data])
 
-class ReaderCSV:
-
-    def __init__(self, data_set_path):
-       # self.time_path = "datafiles/{0}_time.csv".format(data_set_path)
-        self.time_path = "datafiles/YHOO_time.csv"
-       # self.data_path = "datafiles/{0}_data.csv".format(data_set_path)
-        self.data_path = "datafiles/YHOO_data.csv"
-
-    def read(self):
-
-        with open(self.time_path, 'r', newline='') as csvfile:
-            spamwriter = csv.reader(csvfile, delimiter=' ',
-                                    quotechar='|', quoting=csv.QUOTE_MINIMAL)
-            timeRows = ()
-            timeCheckRows = ()
-            for row in spamwriter:
-                timeRows = timeRows + (row[1],)
-                timeCheckRows = timeCheckRows + (row[0],)
-
-
-        with open(self.data_path, 'r', newline='') as csvfile:
-            spamwriter = csv.reader(csvfile, delimiter=' ',
-                                    quotechar='|', quoting=csv.QUOTE_MINIMAL)
-            dataRows = ()
-            dataCheckRows = ()
-            for row in spamwriter:
-                dataRows = timeRows + (row[1],)
-                dataCheckRows = timeCheckRows + (row[0],)
-
-        if(timeCheckRows==dataCheckRows):
-            return timeRows, dataRows
-        else:
-            return None
+# class ReaderCSV:
+    #
+    # # def __init__(self, data_set_path):
+    # #    # self.time_path = "datafiles/{0}_time.csv".format(data_set_path)
+    # #    #  self.time_path = "datafiles/YHOO_time.csv"
+    # #    # self.data_path = "datafiles/{0}_data.csv".format(data_set_path)
+    # #    #  self.data_path = "datafiles/YHOO_data.csv"
+    #
+    # def read(self):
+    #
+    #     with open(self.time_path, 'r', newline='') as csvfile:
+    #         spamwriter = csv.reader(csvfile, delimiter=' ',
+    #                                 quotechar='|', quoting=csv.QUOTE_MINIMAL)
+    #         timeRows = ()
+    #         timeCheckRows = ()
+    #         for row in spamwriter:
+    #             timeRows = timeRows + (row[1],)
+    #             timeCheckRows = timeCheckRows + (row[0],)
+    #
+    #
+    #     with open(self.data_path, 'r', newline='') as csvfile:
+    #         spamwriter = csv.reader(csvfile, delimiter=' ',
+    #                                 quotechar='|', quoting=csv.QUOTE_MINIMAL)
+    #         dataRows = ()
+    #         dataCheckRows = ()
+    #         for row in spamwriter:
+    #             dataRows = timeRows + (row[1],)
+    #             dataCheckRows = timeCheckRows + (row[0],)
+    #
+    #     if(timeCheckRows==dataCheckRows):
+    #         return timeRows, dataRows
+    #     else:
+    #         return None
 
 
 

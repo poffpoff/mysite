@@ -55,8 +55,8 @@ class LineView(HighChartsLineView):
     y_axis_title = ""
 
 
-    share_model = ShareModel.objects.get(id=1)
-    data_set = share_model.get_read()
+    share_model = ShareModel()
+    # data_set = share_model.get_read()
 
     #categories = ['Orange', 'Bananas', 'Apples']
 

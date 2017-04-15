@@ -8,6 +8,7 @@ import logging
 from django.db import models
 from mysite.utils import data
 
+DEFAULT_SUPER_ID = 1
 
 class ShareModel(models.Model):
     name_ref = models.CharField(max_length=100)
@@ -30,3 +31,45 @@ class ShareModel(models.Model):
 
     class Meta:
         ordering = ['name_ref']
+
+class ViewModel(models.Model):
+    name_ref = models.CharField(max_length=100)
+
+    def __str__(self):
+        return str(self.name_ref)
+
+    class Meta:
+        ordering = ['name_ref']
+
+class DataModel(models.Model):
+    name_ref = models.CharField(max_length=100)
+
+    def __str__(self):
+        return str(self.name_ref)
+
+    class Meta:
+        ordering = ['name_ref']
+
+class ActionModel(models.Model):
+    name_ref = models.CharField(max_length=100)
+
+    def __str__(self):
+        return str(self.name_ref)
+
+    class Meta:
+        ordering = ['name_ref']
+
+class SuperModel(models.Model):
+    name_ref = models.CharField(max_length=100)
+    view_ref = models.ManyToManyField(ViewModel)
+    data_ref = models.ManyToManyField(DataModel)
+    action_ref = models.ManyToManyField(ActionModel)
+    peer_ref = models.ManyToManyField('self')
+
+    def __str__(self):
+        return str(self.name_ref)
+
+    class Meta:
+        ordering = ['name_ref']
+
+

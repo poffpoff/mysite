@@ -1,6 +1,7 @@
+------------------------------------------------------------------
 wwapp baptistedeclerck$ celery -A mysite beat -l info
 wwapp baptistedeclerck$ celery -A mysite worker -l info
-
+-------------------------------------------------------------------
 Materiel:
 
 Python 3.5.1
